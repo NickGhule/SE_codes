@@ -1,6 +1,6 @@
 import re
 def show_time_of_pid(line):
-  pattern =     
+  pattern = r"([\w+]{3} [\w+]* [\w+]*:[\w+]*:[\w+]*) [\w+ \.=]*\[(\w+)\]"
   result = re.search(pattern, line)
   return "{} pid:{}".format(result[1], result[2])
 
