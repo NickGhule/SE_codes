@@ -33,7 +33,6 @@ class Dict
         for (int i = 0; i < 26; i++)
         {
             Dictionary[i] = NULL;
-            cout<<Dictionary[i]<<"\n";
         }
         
     }
@@ -46,7 +45,7 @@ class Dict
         }
         else
         {
-            for(int i = uppercase(word[0])-65+1; uppercase(word[0])-65 != i; i %= 26)
+            for(int i = uppercase(word[0])-65+1; uppercase(word[0])-65 != i;i++, i %= 26)
             {
                 if(Dictionary[i] == NULL)
                 {
@@ -74,11 +73,10 @@ class Dict
     {
         if(Dictionary[uppercase(word[0])-65] != NULL)
         {
-            for(int i = uppercase(word[0])-65;  uppercase(word[0])-65 != i; i %= 26 )
+            for(int i = uppercase(word[0])-65;  uppercase(word[0])-65-1 != i;i++, i %= 26 )
             {
                 if(Dictionary[i] != NULL)
                 {
-                    cout<<word.compare(Dictionary[i]->word);
                     if(word.compare(Dictionary[i]->word) == 0)
                     {
                         Node* temp = Dictionary[i];
@@ -93,6 +91,26 @@ class Dict
         }
         cout<<"\n Word not present";
     }
+    void search(string word)
+    {
+        if(Dictionary[uppercase(word[0])-65] != NULL)
+        {
+            for(int i = uppercase(word[0])-65;  uppercase(word[0])-65-1 != i;i++, i %= 26 )
+            {
+                if(Dictionary[i] != NULL)
+                {
+                    if(word.compare(Dictionary[i]->word) == 0)
+                    {
+                        cout<<"\n"<<Dictionary[i]->word<<" :: "<<Dictionary[i]->meaning;
+                        return;
+                    }
+                }
+                
+            }
+        }
+        cout<<"\n Word not present";
+
+    }
 };
 
 
@@ -100,17 +118,42 @@ int main(int argc, const char** argv)
 {
     Dict tempArr;
     string word,meaning;
+    int ch;
     while(1)
     {
-        cout<<"\nEnter word :: ";
-        cin>>word;
-        cout<<"\nEnter meaning :: ";
-        cin>>meaning;
-        tempArr.insert(word,meaning);
-        tempArr.show();
-        cout<<"\nEnter word to delete ::";
-        cin>>word;
-        tempArr.deleteword(word);
+        cout<<"\n********** Dictionary **********";
+        cout<<"\n1. Add Word";
+        cout<<"\n2. Delete word";
+        cout<<"\n3. Search word";
+        cout<<"\n4. Show";
+        cout<<"\n Enter your choice ::";
+        cin>>ch;
+        switch (ch)
+        {
+        case 1:
+            cout<<"\nEnter word :: ";
+            cin>>word;
+            cout<<"\nEnter meaning :: ";
+            cin>>meaning;
+            tempArr.insert(word,meaning);
+            break;
+        case 2:
+            cout<<"\nEnter word :: ";
+            cin>>word;
+            tempArr.deleteword(word);
+            break;
+        case 3:
+            cout<<"\nEnter word :: ";
+            cin>>word;
+            tempArr.search(word);
+            break;
+        case 4:
+            tempArr.show();
+            break;
+        default:
+            break;
+        }
+        
     }
 
     return 0;
