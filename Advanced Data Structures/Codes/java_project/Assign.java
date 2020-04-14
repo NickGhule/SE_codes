@@ -1,51 +1,19 @@
+package java_project;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-abstract class Employee
-{
-    public int employeeId;  //global parameter
-    protected String name;
-    public int salary;
-    static String companyName = "Haayka Softwares";
-    static int employeeIdGenerator = 0;
-    public abstract void increment(int percent); //formal parameter
-    public String toString() 
-    {
-        return "[ EmpID :" + employeeId + ",\t name : " + name + ",\t salary : " + salary + "]";
-    }
-    
-}
+import java_project.employees.*;
 
-class Worker extends Employee
-{
-    Worker(final String name) {
-        employeeId = ++employeeIdGenerator;
-        this.name = name;
-        salary = 1000;
-    }
-
-    public void increment(final int percent) // formal parameter
-    {
-        final int bonus = 100; // local parameter
-        salary += (salary * percent / 100) + bonus;
+final class IdGenerator{
+    private static int Id = 0;
+    protected static int getid() {
+        return ++Id;
     }
 }
+public class Assign {
 
-class Manager extends Employee {
-    Manager(final String name) {
-        employeeId = ++employeeIdGenerator;
-        this.name = name;
-        salary = 2000;
-    }
-
-    public void increment(final int percent) {
-        final int bonus = 200;
-        salary += (salary * percent / 100) + bonus;
-    }
-}
-
-public class assignment10 {
     public static void main(final String[] args) {
         final Scanner input = new Scanner(System.in);
         String name;
@@ -59,7 +27,8 @@ public class assignment10 {
             System.out.println("    1. Register an Employee");
             System.out.println("    2. Increment Salary of an Employee");
             System.out.println("    3. Show Employees of " + Employee.companyName);
-            System.out.print("    4. Enter your choice :: ");
+            System.out.println("    4. Exit");
+            System.out.print("       Enter your choice :: ");
             choice = input.nextInt();
 
             switch (choice) {
@@ -75,14 +44,14 @@ public class assignment10 {
                             name = input.nextLine(); // nextLine() has unexpected behaviour, we need to add an extra
                                                      // nextLine()
                             name = input.nextLine();
-                            workers.add(new Worker(name));
+                            workers.add(new Worker(name, IdGenerator.getid()));
                             break;
                         case 2:
                             System.out.print("Enter Name :: ");
                             name = input.nextLine(); // nextLine() has unexpected behaviour, we need to add an extra
                                                      // nextLine()
                             name = input.nextLine();
-                            managers.add(new Manager(name));
+                            managers.add(new Manager(name, IdGenerator.getid()));
                             break;
                     }
                     for (final Worker data : workers) {
@@ -154,7 +123,8 @@ public class assignment10 {
                     for (final Manager manager : managers) {
                         System.out.println(manager);
                     }
-                
+                    break;
+
                 case 4:
                     stop = true;
                     break;
